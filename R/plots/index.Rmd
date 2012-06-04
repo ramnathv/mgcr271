@@ -1,6 +1,6 @@
 ```{r setup, echo = F}
 library(knitr); library(lattice)
-opts_knit$set(out.format = 'html')
+opts_knit$set(out.format = 'html', cache.path = '.cache/', cache = TRUE)
 opts_chunk$set(highlight = TRUE, tidy = FALSE, fig.align = 'center', fig.height = 5.5, dev = 'svg')
 ```
 
@@ -24,9 +24,11 @@ opts_chunk$set(highlight = TRUE, tidy = FALSE, fig.align = 'center', fig.height 
 
 The objective of this tutorial is to give you a quick overview of how to analyze data with `R`. We will focus our attention on the following topics
 
-1. Working with Data
-2. Gra
-
+1. Data
+2. Subset
+3. Histogram
+4. Boxplot
+5. Scatterplot
 
 ---
 
@@ -50,6 +52,58 @@ NROW(mtcars)       # view number of rows
 NCOL(mtcars)       # view number of columns
 dim(mtcars)        # view rows x columns
 str(mtcars)        # view structure of data
+```
+
+---
+
+### Working with Subsets of Data ###
+
+Very often you might want to work with a smaller subset of the data. `R` makes it very easy to select subsets by combining conditional operations. The main operations are
+
+    == : equal to
+    != : not equal to
+    >= : greater or equal to
+    <= : lesser or equal to
+    &  : and
+    |  : or
+    
+Below, you will find these operators applied to choose specific subsets of the `mtcars` data set.
+
+```{r eval = F, subset}
+subset(mtcars, gear == 4)           # four gears
+subset(mtcars, cyl != 2)            # not 2 cylinders
+subset(mtcars, mpg > 20)            # mpg more than 20
+subset(mtcars, mpg > 20 & wt < 20)  # mpg > 20 AND wt < 20
+subset(mtcars, mpg > 20 | wt < 20)  # mpg > 20 OR wt < 20
+```
+
+---
+
+# Plotting with R #
+
+---
+
+### Basics ###
+
+You will need to install the package `lattice` before you can start using it.
+
+```{r lattice, eval = F}
+install.packages('lattice')
+```
+
+Once installed, you need to load the `lattice` package before you start plotting.
+
+```{r lattice2, eval = F}
+require(lattice)
+```
+
+If you are interested in economist style of plots, then you need to install the package `latticeExtra` and run the following commands before you start plotting
+
+```{r lattice-extra, eval = F}
+install.packages('latticeExtra')
+require(latticeExtra)
+trellis.theme.set(theme = theEconomist.theme(box = 'transparent'))
+lattice.options(theEconomist.opts())
 ```
 
 ---
@@ -247,26 +301,6 @@ xyplot(mpg ~ wt, data = mtcars, subset = (cyl == 6))
 
 ---
 
-### Working with Subsets of Data ###
-
-Very often you might want to work with a smaller subset of the data. `R` makes it very easy to select subsets by combining conditional operations. The main operations are
-
-    == : equal to
-    != : not equal to
-    >= : greater or equal to
-    <= : lesser or equal to
-    &  : and
-    |  : or
-    
-Below, you will find these operators applied to choose specific subsets of the `mtcars` data set.
-
-```{r eval = F, subset}
-subset(mtcars, gear == 4)           # four gears
-subset(mtcars, cyl != 2)            # not 2 cylinders
-subset(mtcars, mpg > 20)            # mpg more than 20
-subset(mtcars, mpg > 20 & wt < 20)  # mpg > 20 AND wt < 20
-subset(mtcars, mpg > 20 | wt < 20)  # mpg > 20 OR wt < 20
-```
 
 
 

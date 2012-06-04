@@ -21,9 +21,11 @@
 
 The objective of this tutorial is to give you a quick overview of how to analyze data with `R`. We will focus our attention on the following topics
 
-1. Working with Data
-2. Gra
-
+1. Data
+2. Subset
+3. Histogram
+4. Boxplot
+5. Scatterplot
 
 ---
 
@@ -52,6 +54,58 @@ You can inspect the data set in many ways.
 <span class="functioncall">NCOL</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">)</span>       <span class="comment"># view number of columns</span>
 <span class="functioncall">dim</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">)</span>        <span class="comment"># view rows x columns</span>
 <span class="functioncall">str</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">)</span>        <span class="comment"># view structure of data</span>
+</pre></div></div></div>
+
+
+---
+
+### Working with Subsets of Data ###
+
+Very often you might want to work with a smaller subset of the data. `R` makes it very easy to select subsets by combining conditional operations. The main operations are
+
+    == : equal to
+    != : not equal to
+    >= : greater or equal to
+    <= : lesser or equal to
+    &  : and
+    |  : or
+    
+Below, you will find these operators applied to choose specific subsets of the `mtcars` data set.
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">,</span> <span class="symbol">gear</span> == <span class="number">4</span><span class="keyword">)</span>           <span class="comment"># four gears</span>
+<span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">,</span> <span class="symbol">cyl</span> <span class="keyword">!=</span> <span class="number">2</span><span class="keyword">)</span>            <span class="comment"># not 2 cylinders</span>
+<span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">,</span> <span class="symbol">mpg</span> <span class="keyword">&gt;</span> <span class="number">20</span><span class="keyword">)</span>            <span class="comment"># mpg more than 20</span>
+<span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">,</span> <span class="symbol">mpg</span> <span class="keyword">&gt;</span> <span class="number">20</span> <span class="keyword">&amp;</span> <span class="symbol">wt</span> <span class="keyword">&lt;</span> <span class="number">20</span><span class="keyword">)</span>  <span class="comment"># mpg &gt; 20 AND wt &lt; 20</span>
+<span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">,</span> <span class="symbol">mpg</span> <span class="keyword">&gt;</span> <span class="number">20</span> <span class="keyword">|</span> <span class="symbol">wt</span> <span class="keyword">&lt;</span> <span class="number">20</span><span class="keyword">)</span>  <span class="comment"># mpg &gt; 20 OR wt &lt; 20</span>
+</pre></div></div></div>
+
+
+---
+
+# Plotting with R #
+
+---
+
+### Basics ###
+
+You will need to install the package `lattice` before you can start using it.
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">install.packages</span><span class="keyword">(</span><span class="string">'lattice'</span><span class="keyword">)</span>
+</pre></div></div></div>
+
+
+Once installed, you need to load the `lattice` package before you start plotting.
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">require</span><span class="keyword">(</span><span class="symbol">lattice</span><span class="keyword">)</span>
+</pre></div></div></div>
+
+
+If you are interested in economist style of plots, then you need to install the package `latticeExtra` and run the following commands before you start plotting
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">install.packages</span><span class="keyword">(</span><span class="string">'latticeExtra'</span><span class="keyword">)</span>
+<span class="functioncall">require</span><span class="keyword">(</span><span class="symbol">latticeExtra</span><span class="keyword">)</span>
+<span class="functioncall">trellis.theme.set</span><span class="keyword">(</span><span class="argument">theme</span> <span class="argument">=</span> <span class="functioncall">theEconomist.theme</span><span class="keyword">(</span><span class="argument">box</span> <span class="argument">=</span> <span class="string">'transparent'</span><span class="keyword">)</span><span class="keyword">)</span>
+<span class="functioncall">lattice.options</span><span class="keyword">(</span><span class="functioncall">theEconomist.opts</span><span class="keyword">(</span><span class="keyword">)</span><span class="keyword">)</span>
 </pre></div></div></div>
 
 
@@ -249,26 +303,6 @@ The boxplots drawn by `bwplot` are horizontal by default. Hence the `y` axis dis
 # Subset #
 
 ---
-
-### Working with Subsets of Data ###
-
-Very often you might want to work with a smaller subset of the data. `R` makes it very easy to select subsets by combining conditional operations. The main operations are
-
-    == : equal to
-    != : not equal to
-    >= : greater or equal to
-    <= : lesser or equal to
-    &  : and
-    |  : or
-    
-Below, you will find these operators applied to choose specific subsets of the `mtcars` data set.
-
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">,</span> <span class="symbol">gear</span> == <span class="number">4</span><span class="keyword">)</span>           <span class="comment"># four gears</span>
-<span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">,</span> <span class="symbol">cyl</span> <span class="keyword">!=</span> <span class="number">2</span><span class="keyword">)</span>            <span class="comment"># not 2 cylinders</span>
-<span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">,</span> <span class="symbol">mpg</span> <span class="keyword">&gt;</span> <span class="number">20</span><span class="keyword">)</span>            <span class="comment"># mpg more than 20</span>
-<span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">,</span> <span class="symbol">mpg</span> <span class="keyword">&gt;</span> <span class="number">20</span> <span class="keyword">&amp;</span> <span class="symbol">wt</span> <span class="keyword">&lt;</span> <span class="number">20</span><span class="keyword">)</span>  <span class="comment"># mpg &gt; 20 AND wt &lt; 20</span>
-<span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">,</span> <span class="symbol">mpg</span> <span class="keyword">&gt;</span> <span class="number">20</span> <span class="keyword">|</span> <span class="symbol">wt</span> <span class="keyword">&lt;</span> <span class="number">20</span><span class="keyword">)</span>  <span class="comment"># mpg &gt; 20 OR wt &lt; 20</span>
-</pre></div></div></div>
 
 
 
