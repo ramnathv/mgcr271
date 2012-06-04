@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<!--
+  Google HTML5 slide template
+
+  Authors: Luke Mah?? (code)
+           Marcin Wichary (code and design)
+           
+           Dominic Mazzoni (browser compatibility)
+           Charles Chen (ChromeVox support)
+
+  URL: http://code.google.com/p/html5slides/
+-->
+
+<html>
+  <head>
+    <title>Presentation</title>
+    <meta charset='utf-8'>
+    
+    <!-- LOAD HTML5SLIDES CSS FILES AND JS -->
+    <link rel="stylesheet" href="html5slides/styles.css">
+    <script src='html5slides/slides.js'></script>
+    
+    <!-- LOAD HIGHLIGHTER CSS FILES AND JS -->
+    <link rel="stylesheet" href="highlight/acid.css">
+    
+    <!-- LOAD MATHJAX JS -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+      });
+    </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    
+    <!-- LOAD CUSTOM CSS AND JS -->
+    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/images">
+        
+  </head>
+  
+  <body style='display: none'>
+     <section class='slides layout-regular template-default'>
+       <article class = "fill">
+         
+<h1>
+  <span class = 'yellow'>How to Do it with R</font><br/>
+  <span class = 'white' style = 'font-size: 0.7em;'>
+    A Tutorial
+  </span><br/>
+  <span class = 'white' style = 'font-size: 0.5em;'>
+    by Ramnath Vaidyanathan
+  </span>
+</h1>
+
+<p><img src="http://goo.gl/EpXln" alt="slides"></p>
+
+       </article>
+       <article>
+         <h3>Overview</h3>
+
+<p>The objective of this tutorial is to give you a quick overview of how to analyze data with <code>R</code>. We will focus our attention on the following topics</p>
+
+<ol>
+<li>Working with Data</li>
+<li>Gra</li>
+</ol>
+
+       </article>
+       <article>
+         <h3>Data</h3>
+
+<p>We will work with the built-in data set <code>mtcars</code>.</p>
+
+<div class="chunk"><div class="rcode"><div class="output"><pre class="knitr">##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+</pre></div></div></div>
+
+<p>You can inspect the data set in many ways. </p>
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">View</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">)</span>       <span class="comment"># view data in rstudio</span>
+<span class="functioncall">head</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">)</span>       <span class="comment"># view first six rows</span>
+<span class="functioncall">head</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">,</span> <span class="number">10</span><span class="keyword">)</span>   <span class="comment"># view first ten rows</span>
+<span class="functioncall">tail</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">,</span> <span class="number">20</span><span class="keyword">)</span>   <span class="comment"># view last twenty rows</span>
+<span class="functioncall">NROW</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">)</span>       <span class="comment"># view number of rows </span>
+<span class="functioncall">NCOL</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">)</span>       <span class="comment"># view number of columns</span>
+<span class="functioncall">dim</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">)</span>        <span class="comment"># view rows x columns</span>
+<span class="functioncall">str</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">)</span>        <span class="comment"># view structure of data</span>
+</pre></div></div></div>
+
+       </article>
+       <article>
+         <h1>Histograms</h1>
+
+       </article>
+       <article>
+         <h3>Basic Histogram</h3>
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">histogram</span><span class="keyword">(</span><span class="keyword">~</span> <span class="symbol">mpg</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">)</span>
+</pre></div></div><div class="rimage center"><img src="figure/simple.svg" class="plot" /></div></div>
+
+       </article>
+       <article>
+         <h3>Control Number of Bins</h3>
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">histogram</span><span class="keyword">(</span><span class="keyword">~</span> <span class="symbol">mpg</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">,</span> <span class="argument">nint</span> <span class="argument">=</span> <span class="number">20</span><span class="keyword">)</span>
+</pre></div></div><div class="rimage center"><img src="figure/nint.svg" class="plot" /></div></div>
+
+       </article>
+       <article>
+         <h3>Change Color</h3>
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">histogram</span><span class="keyword">(</span><span class="keyword">~</span> <span class="symbol">mpg</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">,</span> <span class="argument">col</span> <span class="argument">=</span> <span class="string">'darkred'</span><span class="keyword">)</span> <span class="comment"># see colors() for more</span>
+</pre></div></div><div class="rimage center"><img src="figure/col.svg" class="plot" /></div></div>
+
+       </article>
+       <article>
+         <h3>Add x-Axis and y-Axis Labels</h3>
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">histogram</span><span class="keyword">(</span><span class="keyword">~</span> <span class="symbol">mpg</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">,</span> <span class="argument">xlab</span> <span class="argument">=</span> <span class="string">'Miles per Gallon'</span><span class="keyword">)</span>
+</pre></div></div><div class="rimage center"><img src="figure/labels.svg" class="plot" /></div></div>
+
+       </article>
+       <article>
+         <h3>Split by Single Categorical Variable</h3>
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">histogram</span><span class="keyword">(</span><span class="keyword">~</span> <span class="symbol">mpg</span> <span class="keyword">|</span> <span class="symbol">cyl</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">)</span>
+</pre></div></div><div class="rimage center"><img src="figure/single-cat.svg" class="plot" /></div></div>
+
+       </article>
+       <article>
+         <h3>Split by Two Categorical Variables</h3>
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">histogram</span><span class="keyword">(</span><span class="keyword">~</span> <span class="symbol">mpg</span> <span class="keyword">|</span> <span class="symbol">cyl</span> <span class="keyword">+</span> <span class="symbol">gear</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">)</span>
+</pre></div></div><div class="rimage center"><img src="figure/two-cat.svg" class="plot" /></div></div>
+
+       </article>
+       <article>
+         <h3>Histogram for a Subset of the Data</h3>
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">histogram</span><span class="keyword">(</span><span class="keyword">~</span> <span class="symbol">mpg</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">,</span> <span class="argument">subset</span> <span class="argument">=</span> <span class="keyword">(</span><span class="symbol">gear</span> == <span class="number">4</span><span class="keyword">)</span><span class="keyword">)</span>
+</pre></div></div><div class="rimage center"><img src="figure/hist-sub.svg" class="plot" /></div></div>
+
+       </article>
+       <article>
+         <h3>Histograms: Summary</h3>
+
+<p>Here is a short summary of the commands you have seen on histograms.</p>
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">hist</span><span class="keyword">(</span><span class="keyword">~</span> <span class="symbol">mpg</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">)</span>                       <span class="comment"># histogram of mpg</span>
+<span class="functioncall">hist</span><span class="keyword">(</span><span class="keyword">~</span> <span class="symbol">mpg</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">,</span> <span class="argument">nint</span> <span class="argument">=</span> <span class="number">20</span><span class="keyword">)</span>            <span class="comment"># 20 bins</span>
+<span class="functioncall">hist</span><span class="keyword">(</span><span class="keyword">~</span> <span class="symbol">mpg</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">,</span> <span class="argument">col</span> <span class="argument">=</span> <span class="string">'darkred'</span><span class="keyword">)</span>      <span class="comment"># colored darkred.</span>
+<span class="functioncall">hist</span><span class="keyword">(</span><span class="keyword">~</span> <span class="symbol">mpg</span> <span class="keyword">|</span> <span class="symbol">cyl</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">)</span>                 <span class="comment"># split by cyl</span>
+<span class="functioncall">hist</span><span class="keyword">(</span><span class="keyword">~</span> <span class="symbol">mpg</span> <span class="keyword">|</span> <span class="symbol">cyl</span> <span class="keyword">+</span> <span class="symbol">gear</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">)</span>          <span class="comment"># split by cyl and gear</span>
+<span class="functioncall">hist</span><span class="keyword">(</span><span class="keyword">~</span> <span class="symbol">mpg</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">,</span> <span class="argument">subset</span> <span class="argument">=</span> <span class="keyword">(</span><span class="symbol">gear</span> == <span class="number">4</span><span class="keyword">)</span><span class="keyword">)</span> <span class="comment"># specific subset</span>
+</pre></div></div></div>
+
+       </article>
+       <article>
+         <h1>Box and Whisker Plots</h1>
+
+       </article>
+       <article>
+         <h3>Simple Boxplot</h3>
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">bwplot</span><span class="keyword">(</span><span class="keyword">~</span> <span class="symbol">mpg</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">)</span>
+</pre></div></div><div class="rimage center"><img src="figure/bwplot.svg" class="plot" /></div></div>
+
+       </article>
+       <article>
+         <h3>Split by Single Categorical Variable</h3>
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">bwplot</span><span class="keyword">(</span><span class="keyword">~</span> <span class="symbol">mpg</span> <span class="keyword">|</span> <span class="symbol">cyl</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">)</span>
+</pre></div></div><div class="rimage center"><img src="figure/bwplot1.svg" class="plot" /></div></div>
+
+       </article>
+       <article>
+         <h3>Side by Side Boxplot</h3>
+
+<p>The boxplots drawn by <code>bwplot</code> are horizontal by default. Hence the <code>y</code> axis displays the categorical explanatory variable, while the <code>x</code> axis displays the numerical response variable</p>
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">bwplot</span><span class="keyword">(</span><span class="symbol">cyl</span> <span class="keyword">~</span> <span class="symbol">mpg</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">)</span>
+</pre></div></div><div class="rimage center"><img src="figure/bwplot2.svg" class="plot" /></div></div>
+
+       </article>
+       <article>
+         <h3>Boxplot for a Subset of the Data</h3>
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">bwplot</span><span class="keyword">(</span><span class="symbol">cyl</span> <span class="keyword">~</span> <span class="symbol">mpg</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">,</span> <span class="argument">subset</span> <span class="argument">=</span> <span class="keyword">(</span><span class="symbol">gear</span> == <span class="number">4</span><span class="keyword">)</span><span class="keyword">)</span>
+</pre></div></div><div class="rimage center"><img src="figure/bwplot3.svg" class="plot" /></div></div>
+
+       </article>
+       <article>
+         <h1>Scatterplots</h1>
+
+       </article>
+       <article>
+         <h3>Basic Scatterplot</h3>
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">xyplot</span><span class="keyword">(</span><span class="symbol">mpg</span> <span class="keyword">~</span> <span class="symbol">wt</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">)</span>
+</pre></div></div><div class="rimage center"><img src="figure/scplot1.svg" class="plot" /></div></div>
+
+       </article>
+       <article>
+         <h3>Solid Circles as Points</h3>
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">xyplot</span><span class="keyword">(</span><span class="symbol">mpg</span> <span class="keyword">~</span> <span class="symbol">wt</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">,</span> <span class="argument">pch</span> <span class="argument">=</span> <span class="number">16</span><span class="keyword">)</span> <span class="comment"># change point shapes using pch</span>
+</pre></div></div><div class="rimage center"><img src="figure/scplot2.svg" class="plot" /></div></div>
+
+       </article>
+       <article>
+         <h3>Change Color of Points</h3>
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">xyplot</span><span class="keyword">(</span><span class="symbol">mpg</span> <span class="keyword">~</span> <span class="symbol">wt</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">,</span> <span class="argument">col</span> <span class="argument">=</span> <span class="string">'maroon'</span><span class="keyword">,</span> <span class="argument">pch</span> <span class="argument">=</span> <span class="number">16</span><span class="keyword">)</span>
+</pre></div></div><div class="rimage center"><img src="figure/scplot3.svg" class="plot" /></div></div>
+
+       </article>
+       <article>
+         <h3>Add xAxis and yAxis Labels</h3>
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">xyplot</span><span class="keyword">(</span><span class="symbol">mpg</span> <span class="keyword">~</span> <span class="symbol">wt</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">,</span> <span class="argument">col</span> <span class="argument">=</span> <span class="string">'maroon'</span><span class="keyword">,</span> <span class="argument">pch</span> <span class="argument">=</span> <span class="number">16</span><span class="keyword">,</span>
+  <span class="argument">xlab</span> <span class="argument">=</span> <span class="string">'Weight'</span><span class="keyword">,</span> <span class="argument">ylab</span> <span class="argument">=</span> <span class="string">'Miles Per Gallon'</span><span class="keyword">)</span>
+</pre></div></div><div class="rimage center"><img src="figure/scplot4.svg" class="plot" /></div></div>
+
+       </article>
+       <article>
+         <h3>Color Points by Categorical Variable</h3>
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">xyplot</span><span class="keyword">(</span><span class="symbol">mpg</span> <span class="keyword">~</span> <span class="symbol">wt</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">,</span> <span class="argument">group</span> <span class="argument">=</span> <span class="symbol">cyl</span><span class="keyword">,</span> <span class="argument">auto.key</span> <span class="argument">=</span> <span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">pch</span> <span class="argument">=</span> <span class="number">16</span><span class="keyword">,</span>
+  <span class="argument">xlab</span> <span class="argument">=</span> <span class="string">'Weight'</span><span class="keyword">,</span> <span class="argument">ylab</span> <span class="argument">=</span> <span class="string">'Miles Per Gallon'</span><span class="keyword">)</span>
+</pre></div></div><div class="rimage center"><img src="figure/scplot5.svg" class="plot" /></div></div>
+
+       </article>
+       <article>
+         <h3>Split by Single Categorical Variable</h3>
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">xyplot</span><span class="keyword">(</span><span class="symbol">mpg</span> <span class="keyword">~</span> <span class="symbol">wt</span> <span class="keyword">|</span> <span class="symbol">cyl</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">,</span> <span class="argument">col</span> <span class="argument">=</span> <span class="string">'maroon'</span><span class="keyword">,</span> <span class="argument">pch</span> <span class="argument">=</span> <span class="number">16</span><span class="keyword">,</span>
+  <span class="argument">xlab</span> <span class="argument">=</span> <span class="string">'Weight'</span><span class="keyword">,</span> <span class="argument">ylab</span> <span class="argument">=</span> <span class="string">'Miles Per Gallon'</span><span class="keyword">)</span>
+</pre></div></div><div class="rimage center"><img src="figure/scplot6.svg" class="plot" /></div></div>
+
+       </article>
+       <article>
+         <h3>Split by Multiple Categorical Variable</h3>
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">xyplot</span><span class="keyword">(</span><span class="symbol">mpg</span> <span class="keyword">~</span> <span class="symbol">wt</span> <span class="keyword">|</span> <span class="symbol">cyl</span> <span class="keyword">+</span> <span class="symbol">gear</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">,</span> <span class="argument">col</span> <span class="argument">=</span> <span class="string">'maroon'</span><span class="keyword">,</span> <span class="argument">pch</span> <span class="argument">=</span> <span class="number">16</span><span class="keyword">,</span>
+  <span class="argument">xlab</span> <span class="argument">=</span> <span class="string">'Weight'</span><span class="keyword">,</span> <span class="argument">ylab</span> <span class="argument">=</span> <span class="string">'Miles Per Gallon'</span><span class="keyword">)</span>
+</pre></div></div><div class="rimage center"><img src="figure/scplot7.svg" class="plot" /></div></div>
+
+       </article>
+       <article>
+         <h3>Scatterplot for a Subset of the Data</h3>
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">xyplot</span><span class="keyword">(</span><span class="symbol">mpg</span> <span class="keyword">~</span> <span class="symbol">wt</span><span class="keyword">,</span> <span class="argument">data</span> <span class="argument">=</span> <span class="symbol">mtcars</span><span class="keyword">,</span> <span class="argument">subset</span> <span class="argument">=</span> <span class="keyword">(</span><span class="symbol">cyl</span> == <span class="number">6</span><span class="keyword">)</span><span class="keyword">)</span>
+</pre></div></div><div class="rimage center"><img src="figure/scplot8.svg" class="plot" /></div></div>
+
+       </article>
+       <article>
+         <h1>Subset</h1>
+
+       </article>
+       <article>
+         <h3>Working with Subsets of Data</h3>
+
+<p>Very often you might want to work with a smaller subset of the data. <code>R</code> makes it very easy to select subsets by combining conditional operations. The main operations are</p>
+
+<pre><code>== : equal to
+!= : not equal to
+&gt;= : greater or equal to
+&lt;= : lesser or equal to
+&amp;  : and
+|  : or
+</code></pre>
+
+<p>Below, you will find these operators applied to choose specific subsets of the <code>mtcars</code> data set.</p>
+
+<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr"><span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">,</span> <span class="symbol">gear</span> == <span class="number">4</span><span class="keyword">)</span>           <span class="comment"># four gears</span>
+<span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">,</span> <span class="symbol">cyl</span> <span class="keyword">!=</span> <span class="number">2</span><span class="keyword">)</span>            <span class="comment"># not 2 cylinders</span>
+<span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">,</span> <span class="symbol">mpg</span> <span class="keyword">&gt;</span> <span class="number">20</span><span class="keyword">)</span>            <span class="comment"># mpg more than 20</span>
+<span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">,</span> <span class="symbol">mpg</span> <span class="keyword">&gt;</span> <span class="number">20</span> <span class="keyword">&amp;</span> <span class="symbol">wt</span> <span class="keyword">&lt;</span> <span class="number">20</span><span class="keyword">)</span>  <span class="comment"># mpg &gt; 20 AND wt &lt; 20</span>
+<span class="functioncall">subset</span><span class="keyword">(</span><span class="symbol">mtcars</span><span class="keyword">,</span> <span class="symbol">mpg</span> <span class="keyword">&gt;</span> <span class="number">20</span> <span class="keyword">|</span> <span class="symbol">wt</span> <span class="keyword">&lt;</span> <span class="number">20</span><span class="keyword">)</span>  <span class="comment"># mpg &gt; 20 OR wt &lt; 20</span>
+</pre></div></div></div>
+
+       </article>
+     </section>
+  </body>
+
+</html>

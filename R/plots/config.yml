@@ -1,0 +1,5 @@
+framework: html5slides
+highlighter: R
+histyle: acid
+input: index.Rmd
+

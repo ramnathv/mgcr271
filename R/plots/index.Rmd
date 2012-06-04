@@ -1,0 +1,276 @@
+```{r setup, echo = F}
+library(knitr); library(lattice)
+opts_knit$set(out.format = 'html')
+opts_chunk$set(highlight = TRUE, tidy = FALSE, fig.align = 'center', fig.height = 5.5, dev = 'svg')
+```
+
+..article: fill
+
+<h1>
+  <span class = 'yellow'>How to Do it with R</font><br/>
+  <span class = 'white' style = 'font-size: 0.7em;'>
+    A Tutorial
+  </span><br/>
+  <span class = 'white' style = 'font-size: 0.5em;'>
+    by Ramnath Vaidyanathan
+  </span>
+</h1>
+
+![slides](http://goo.gl/EpXln)
+
+---
+
+### Overview ###
+
+The objective of this tutorial is to give you a quick overview of how to analyze data with `R`. We will focus our attention on the following topics
+
+1. Working with Data
+2. Gra
+
+
+---
+
+### Data ###
+
+
+We will work with the built-in data set `mtcars`.
+
+```{r mtcars1, echo = F}
+head(mtcars)
+```
+
+You can inspect the data set in many ways. 
+
+```{r mtcars-inspect, eval = F}
+View(mtcars)       # view data in rstudio
+head(mtcars)       # view first six rows
+head(mtcars, 10)   # view first ten rows
+tail(mtcars, 20)   # view last twenty rows
+NROW(mtcars)       # view number of rows 
+NCOL(mtcars)       # view number of columns
+dim(mtcars)        # view rows x columns
+str(mtcars)        # view structure of data
+```
+
+---
+
+# Histograms #
+
+---
+
+### Basic Histogram ###
+
+``` {r simple}
+histogram(~ mpg, data = mtcars)
+```
+
+---
+
+### Control Number of Bins ###
+
+``` {r nint}
+histogram(~ mpg, data = mtcars, nint = 20)
+```
+
+---
+
+### Change Color ###
+
+``` {r col}
+histogram(~ mpg, data = mtcars, col = 'darkred') # see colors() for more
+```
+
+---
+
+### Add x-Axis and y-Axis Labels ###
+
+``` {r labels}
+histogram(~ mpg, data = mtcars, xlab = 'Miles per Gallon')
+```
+
+---
+
+### Split by Single Categorical Variable ###
+
+``` {r single-cat}
+histogram(~ mpg | cyl, data = mtcars)
+```
+
+---
+
+### Split by Two Categorical Variables ###
+
+``` {r two-cat}
+histogram(~ mpg | cyl + gear, data = mtcars)
+```
+
+---
+
+### Histogram for a Subset of the Data ###
+
+``` {r hist-sub}
+histogram(~ mpg, data = mtcars, subset = (gear == 4))
+```
+
+---
+
+### Histograms: Summary ###
+
+Here is a short summary of the commands you have seen on histograms.
+
+``` {r mtcars-hist, eval = F}
+hist(~ mpg, data = mtcars)                       # histogram of mpg
+hist(~ mpg, data = mtcars, nint = 20)            # 20 bins
+hist(~ mpg, data = mtcars, col = 'darkred')      # colored darkred.
+hist(~ mpg | cyl, data = mtcars)                 # split by cyl
+hist(~ mpg | cyl + gear, data = mtcars)          # split by cyl and gear
+hist(~ mpg, data = mtcars, subset = (gear == 4)) # specific subset
+```
+
+---
+
+# Box and Whisker Plots #
+
+
+---
+
+### Simple Boxplot ###
+
+```{r bwplot}
+bwplot(~ mpg, data = mtcars)
+```
+
+---
+
+### Split by Single Categorical Variable ###
+
+```{r bwplot1}
+bwplot(~ mpg | cyl, data = mtcars)
+```
+
+---
+
+### Side by Side Boxplot ###
+
+The boxplots drawn by `bwplot` are horizontal by default. Hence the `y` axis displays the categorical explanatory variable, while the `x` axis displays the numerical response variable
+
+```{r bwplot2, fig.height = 4.5}
+bwplot(cyl ~ mpg, data = mtcars)
+```
+
+---
+
+### Boxplot for a Subset of the Data ###
+
+```{r bwplot3, fig.height = 4.5}
+bwplot(cyl ~ mpg, data = mtcars, subset = (gear == 4))
+```
+
+---
+
+
+# Scatterplots #
+
+---
+
+### Basic Scatterplot ###
+
+```{r scplot1}
+xyplot(mpg ~ wt, data = mtcars)
+```
+
+---
+
+### Solid Circles as Points ###
+
+```{r scplot2}
+xyplot(mpg ~ wt, data = mtcars, pch = 16) # change point shapes using pch
+```
+
+---
+
+### Change Color of Points ###
+
+```{r scplot3}
+xyplot(mpg ~ wt, data = mtcars, col = 'maroon', pch = 16)
+```
+
+---
+
+### Add xAxis and yAxis Labels ###
+
+
+```{r scplot4}
+xyplot(mpg ~ wt, data = mtcars, col = 'maroon', pch = 16, 
+  xlab = 'Weight', ylab = 'Miles Per Gallon')
+```
+
+---
+
+### Color Points by Categorical Variable ###
+
+
+```{r scplot5}
+xyplot(mpg ~ wt, data = mtcars, group = cyl, auto.key = TRUE, pch = 16, 
+  xlab = 'Weight', ylab = 'Miles Per Gallon')
+```
+
+---
+
+### Split by Single Categorical Variable ###
+
+```{r scplot6}
+xyplot(mpg ~ wt | cyl, data = mtcars, col = 'maroon', pch = 16, 
+  xlab = 'Weight', ylab = 'Miles Per Gallon')
+```
+
+---
+
+### Split by Multiple Categorical Variable ###
+
+```{r scplot7}
+xyplot(mpg ~ wt | cyl + gear, data = mtcars, col = 'maroon', pch = 16, 
+  xlab = 'Weight', ylab = 'Miles Per Gallon')
+```
+
+---
+
+### Scatterplot for a Subset of the Data ###
+
+```{r scplot8}
+xyplot(mpg ~ wt, data = mtcars, subset = (cyl == 6))
+```
+
+---
+
+# Subset #
+
+---
+
+### Working with Subsets of Data ###
+
+Very often you might want to work with a smaller subset of the data. `R` makes it very easy to select subsets by combining conditional operations. The main operations are
+
+    == : equal to
+    != : not equal to
+    >= : greater or equal to
+    <= : lesser or equal to
+    &  : and
+    |  : or
+    
+Below, you will find these operators applied to choose specific subsets of the `mtcars` data set.
+
+```{r eval = F, subset}
+subset(mtcars, gear == 4)           # four gears
+subset(mtcars, cyl != 2)            # not 2 cylinders
+subset(mtcars, mpg > 20)            # mpg more than 20
+subset(mtcars, mpg > 20 & wt < 20)  # mpg > 20 AND wt < 20
+subset(mtcars, mpg > 20 | wt < 20)  # mpg > 20 OR wt < 20
+```
+
+
+
+
+
+
+
