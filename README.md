@@ -1,4 +1,4 @@
-mgcr271
-=======
+MGCR 271
+=========
 
 Business Statistics
