@@ -298,11 +298,6 @@ The boxplots drawn by `bwplot` are horizontal by default. Hence the `y` axis dis
 </pre></div></div><div class="rimage center"><img src="figure/scplot8.svg" class="plot" /></div></div>
 
 
----
-
-# Subset #
-
----
 
 
 

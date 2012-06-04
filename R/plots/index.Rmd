@@ -295,11 +295,6 @@ xyplot(mpg ~ wt | cyl + gear, data = mtcars, col = 'maroon', pch = 16,
 xyplot(mpg ~ wt, data = mtcars, subset = (cyl == 6))
 ```
 
----
-
-# Subset #
-
----
 
 
 
